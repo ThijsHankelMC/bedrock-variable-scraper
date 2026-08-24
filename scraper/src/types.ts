@@ -78,3 +78,12 @@ export interface VersionsIndex {
     latest: string;
     versions: VersionEntry[];
 }
+
+// TODO: Add comments
+export interface BackfillArgs {
+    repo: string;
+    out: string;
+    tags?: string[];
+    limit?: number;
+    force: boolean;
+}

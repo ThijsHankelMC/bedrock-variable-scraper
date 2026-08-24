@@ -3,6 +3,7 @@ node_modules/
 
 # Upstream checkout created by the workflow / local runs
 upstream/
+data/
 
 # Logs and OS junk
 *.log

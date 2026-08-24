@@ -6,6 +6,7 @@
     "type": "module",
     "scripts": {
         "scrape": "tsx src/index.ts",
+        "backfill": "tsx src/backfill.ts",
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {

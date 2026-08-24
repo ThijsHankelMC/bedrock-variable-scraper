@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Upstream checkout created by the workflow / local runs
+upstream/
+
+# Logs and OS junk
+*.log
+.DS_Store
+Thumbs.db

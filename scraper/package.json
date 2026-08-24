@@ -1,0 +1,16 @@
+{
+    "name": "bedrock-variables-scraper",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Scrapes variable.*, context.* and temp.* usage in the vanilla Minecraft Bedrock behavior & resource packs.",
+    "type": "module",
+    "scripts": {
+        "scrape": "tsx src/index.ts",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@types/node": "^22.7.0",
+        "tsx": "^4.19.1",
+        "typescript": "^5.6.2"
+    }
+}

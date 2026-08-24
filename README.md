@@ -26,7 +26,7 @@ npm install
 Wipes the output data and scrapes every release from the very first tag onward, oldest-first, so version diffs are computed correctly. Release tags are fetched from the GitHub API.
 
 ```powershell
-npm run init "--" --repo C:\path\to\bedrock-samples --out ..\data --force
+npm run init "--" --repo C:\path\to\bedrock-samples --out ..\site\data --force
 ```
 
 | Flag           | Description                                                  |
@@ -41,7 +41,7 @@ npm run init "--" --repo C:\path\to\bedrock-samples --out ..\data --force
 Fetches all release tags and scrapes any versions not already present in the index. Existing versions are skipped unless `--force` is passed.
 
 ```powershell
-npm run backfill "--" --repo C:\path\to\bedrock-samples --out ..\data
+npm run backfill "--" --repo C:\path\to\bedrock-samples --out ..\site\data
 ```
 
 | Flag           | Description                                               |
@@ -60,7 +60,7 @@ Both `init` and `backfill` check out each tag in the `--repo` clone while scrapi
 Scrapes whatever is currently checked out in a source directory and adds it to the index.
 
 ```powershell
-npm run scrape "--" --source C:\path\to\bedrock-samples --version 1.26.40.05 --out ..\data
+npm run scrape "--" --source C:\path\to\bedrock-samples --version 1.26.40.05 --out ..\site\data
 ```
 
 | Flag              | Description                                                         |
@@ -73,7 +73,7 @@ npm run scrape "--" --source C:\path\to\bedrock-samples --version 1.26.40.05 --o
 
 ## Snapshot format
 
-Each snapshot in `data/versions/` looks like:
+Each snapshot in `site/data/versions/` looks like:
 
 ```jsonc
 {

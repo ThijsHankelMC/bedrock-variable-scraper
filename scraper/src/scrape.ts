@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
 import { Identifier, IdentifierKind } from "./types";
 
+// TODO: This file could be cleaned up. Move constants to a separate file, and clean up the scrape function. It's a bit messy right now
 const PACKS = ["behavior_pack", "resource_pack"];
 const SKIP_DIRS = new Set([".git", "node_modules", ".github", "dist"]);
 const INCLUDE_EXTENSIONS = new Set([".json", ".material", ".molang"]);

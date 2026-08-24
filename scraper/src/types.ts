@@ -85,5 +85,14 @@ export interface BackfillArgs {
     out: string;
     tags?: string[];
     limit?: number;
+    previews: boolean;
+    force: boolean;
+}
+
+// TODO: Add comments
+export interface InitArgs {
+    repo: string;
+    out: string;
+    previews: boolean;
     force: boolean;
 }

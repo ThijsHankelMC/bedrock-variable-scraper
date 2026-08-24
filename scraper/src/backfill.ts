@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { pathToFileURL } from "node:url";
 import { compareVersions, generate } from "./generate";
 import { BackfillArgs } from "./types";
 
@@ -7,7 +8,7 @@ const UPSTREAM = "Mojang/bedrock-samples";
 
 // TODO: Add comments and clean up
 function parseArgs(argv: string[]): BackfillArgs {
-    const args: Partial<BackfillArgs> = { force: false };
+    const args: Partial<BackfillArgs> = { force: false, previews: false };
     for (let i = 0; i < argv.length; i++) {
         const a = argv[i];
         switch (a) {
@@ -25,6 +26,9 @@ function parseArgs(argv: string[]): BackfillArgs {
             case "--limit":
                 args.limit = parseInt(argv[++i]!, 10);
                 break;
+            case "--previews":
+                args.previews = true;
+                break;
             case "--force":
                 args.force = true;
                 break;
@@ -33,7 +37,7 @@ function parseArgs(argv: string[]): BackfillArgs {
         }
     }
     if (!args.repo || !args.out) {
-        throw new Error("Usage: backfill --repo <git clone path> --out <dir> [--tags v1,v2] [--limit N] [--force]");
+        throw new Error("Usage: backfill --repo <git clone path> --out <dir> [--tags v1,v2] [--limit N] [--previews] [--force]");
     }
     return args as BackfillArgs;
 }
@@ -66,8 +70,11 @@ async function fetchReleaseTags(): Promise<string[]> {
 // TODO: Add comments and clean up
 async function main(): Promise<void> {
     const args = parseArgs(process.argv.slice(2));
+    await runBackfill(args);
+}
 
-    let tags = args.tags ?? (await fetchReleaseTags());
+export async function runBackfill(args: BackfillArgs): Promise<void> {
+    let tags = args.tags ?? (await fetchReleaseTags()).filter((t) => args.previews || !/preview/i.test(t));
     tags = [...new Set(tags)].sort(compareVersions);
     if (args.limit && args.limit > 0) tags = tags.slice(-args.limit);
 
@@ -103,7 +110,9 @@ async function main(): Promise<void> {
     }
 }
 
-main().catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+    main().catch((err) => {
+        console.error(err);
+        process.exit(1);
+    });
+}

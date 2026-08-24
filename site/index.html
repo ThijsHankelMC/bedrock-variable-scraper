@@ -25,6 +25,72 @@
         </div>
     </header>
 
+    <main class="container">
+        <section class="stats" id="stats" aria-label="Statistics"></section>
+
+        <section class="controls">
+            <div class="control">
+                <label for="version-select">Version</label>
+                <select id="version-select"></select>
+            </div>
+            <div class="control grow">
+                <label for="search">Search</label>
+                <input id="search" type="search" placeholder="Filter by name, e.g. attack_time" autocomplete="off" />
+            </div>
+            <div class="control">
+                <label for="sort-select">Sort</label>
+                <select id="sort-select">
+                    <option value="name">Name (A-Z)</option>
+                    <option value="count-desc">Most used</option>
+                    <option value="count-asc">Least used</option>
+                    <option value="files-desc">Most files</option>
+                </select>
+            </div>
+            <div class="control">
+                <label for="entity-select">Entity</label>
+                <select id="entity-select">
+                    <option value="">All entities</option>
+                </select>
+            </div>
+            <div class="control">
+                <label for="group-select">Group by</label>
+                <select id="group-select">
+                    <option value="none">None</option>
+                    <option value="kind">Kind</option>
+                    <option value="entity">Entity</option>
+                </select>
+            </div>
+            <div class="control kinds" role="group" aria-label="Filter by kind">
+                <label class="chip"><input type="checkbox" data-kind="variable" checked /> variable</label>
+                <label class="chip"><input type="checkbox" data-kind="context" checked /> context</label>
+                <label class="chip"><input type="checkbox" data-kind="temp" checked /> temp</label>
+            </div>
+            <div class="control toggle">
+                <label class="chip"><input type="checkbox" id="new-only" /> New this version only</label>
+            </div>
+        </section>
+
+        <section class="diff" id="diff" hidden>
+            <details>
+                <summary>
+                    <span class="diff-summary" id="diff-summary"></span>
+                </summary>
+                <div class="diff-body">
+                    <div class="diff-col">
+                        <h3 class="added-title">Added</h3>
+                        <div class="chips" id="added-list"></div>
+                    </div>
+                    <div class="diff-col">
+                        <h3 class="removed-title">Removed</h3>
+                        <div class="chips" id="removed-list"></div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="results" id="results" aria-live="polite"></section>
+    </main>
+
     <footer class="footer">
         <p>
             Generated from
@@ -33,6 +99,7 @@
         </p>
         <p id="updated-at" class="muted"></p>
     </footer>
+    <script src="app.js"></script>
 </body>
 
 </html>

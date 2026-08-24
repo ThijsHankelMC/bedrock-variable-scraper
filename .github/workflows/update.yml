@@ -1,0 +1,117 @@
+name: Update registry
+
+on:
+    schedule:
+        - cron: "0 0 */14 * *" # every 2 weeks
+    workflow_dispatch:
+        inputs:
+            force:
+                description: "Regenerate even if the version already exists"
+                type: boolean
+                default: false
+            version:
+                description: "Override upstream version/tag (optional)"
+                type: string
+                default: ""
+
+permissions:
+    contents: write
+    pages: write
+    id-token: write
+
+concurrency:
+    group: update-registry
+    cancel-in-progress: false
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout this repo
+              uses: actions/checkout@v4
+
+            - name: Resolve latest upstream release
+              id: upstream
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  override="${{ github.event.inputs.version }}"
+                  if [ -n "$override" ]; then
+                    tag="$override"
+                  else
+                    tag=$(gh release view --repo Mojang/bedrock-samples --json tagName -q .tagName)
+                  fi
+                  version="${tag#v}"
+                  echo "tag=$tag" >> "$GITHUB_OUTPUT"
+                  echo "version=$version" >> "$GITHUB_OUTPUT"
+                  echo "Latest upstream tag: $tag (version $version)"
+
+            - name: Decide whether to build
+              id: decide
+              run: |
+                  force="${{ github.event.inputs.force }}"
+                  version='${{ steps.upstream.outputs.version }}'
+                  if [ "$force" = "true" ]; then
+                    echo "build=true" >> "$GITHUB_OUTPUT"
+                  elif [ -f site/data/versions.json ] && grep -q "\"version\": \"$version\"" site/data/versions.json; then
+                    echo "build=false" >> "$GITHUB_OUTPUT"
+                    echo "Version $version already present; skipping build."
+                  else
+                    echo "build=true" >> "$GITHUB_OUTPUT"
+                  fi
+
+            - name: Checkout upstream at tag
+              if: steps.decide.outputs.build == 'true'
+              uses: actions/checkout@v4
+              with:
+                  repository: Mojang/bedrock-samples
+                  ref: ${{ steps.upstream.outputs.tag }}
+                  path: upstream
+
+            - name: Setup Node
+              if: steps.decide.outputs.build == 'true'
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+                  cache-dependency-path: scraper/package-lock.json
+
+            - name: Install scraper deps
+              if: steps.decide.outputs.build == 'true'
+              working-directory: scraper
+              run: npm ci
+
+            - name: Generate data
+              if: steps.decide.outputs.build == 'true'
+              working-directory: scraper
+              run: >
+                  npx tsx src/index.ts
+                  --source ../upstream
+                  --version '${{ steps.upstream.outputs.version }}'
+                  --ref '${{ steps.upstream.outputs.tag }}'
+                  --out ../site/data
+                  ${{ github.event.inputs.force == 'true' && '--force' || '' }}
+
+            - name: Commit updated data
+              if: steps.decide.outputs.build == 'true'
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git add site/data
+                  if git diff --cached --quiet; then
+                    echo "No data changes to commit."
+                  else
+                    git commit -m "data: update registry for ${{ steps.upstream.outputs.version }}"
+                    git push
+                  fi
+
+            - name: Configure Pages
+              uses: actions/configure-pages@v5
+
+            - name: Upload site artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: site
+
+            - name: Deploy to GitHub Pages
+              uses: actions/deploy-pages@v4

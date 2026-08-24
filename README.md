@@ -2,6 +2,8 @@
 
 A registry of every `variable.*`, `context.*` and `temp.*` usage in the vanilla Minecraft Bedrock behavior & resource packs ([Mojang/bedrock-samples](https://github.com/Mojang/bedrock-samples)).
 
+Browse the registry at **[thijshankelmc.github.io/bedrock-variable-scraper](https://thijshankelmc.github.io/bedrock-variable-scraper)**.
+
 ## What it does
 
 The scraper walks the `behavior_pack` and `resource_pack` folders of a `bedrock-samples` checkout, scans every `.json`, `.material` and `.molang` file, and records each identifier match (including the `v.`, `c.` and `t.` shorthands). For every identifier it tracks:

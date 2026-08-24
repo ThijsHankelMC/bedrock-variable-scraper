@@ -83,6 +83,11 @@ a:hover {
     text-decoration: underline;
 }
 
+.topbar-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .repo-link {
     white-space: nowrap;
     border: 1px solid var(--border);

@@ -1,7 +1,24 @@
 {
-  "updatedAt": "2026-08-24T21:31:46.466Z",
-  "latest": "1.26.40.05",
+  "updatedAt": "2026-09-29T00:11:12.215Z",
+  "latest": "1.26.50.4",
   "versions": [
+    {
+      "version": "1.26.50.4",
+      "ref": "v1.26.50.4",
+      "generatedAt": "2026-09-29T00:11:12.207Z",
+      "identifierCount": 624,
+      "totalOccurrences": 6347,
+      "counts": {
+        "variable": 601,
+        "context": 5,
+        "temp": 18
+      },
+      "added": [
+        "variable.emittertexturecoord",
+        "variable.emittertexturesize"
+      ],
+      "removed": []
+    },
     {
       "version": "1.26.40.05",
       "ref": "v1.26.40.05",

@@ -1,9 +1,9 @@
 {
-  "version": "1.26.50.4",
-  "ref": "v1.26.50.4",
-  "generatedAt": "2026-09-29T00:11:12.207Z",
+  "version": "1.26.60.5",
+  "ref": "v1.26.60.5",
+  "generatedAt": "2026-10-29T00:07:33.005Z",
   "identifierCount": 624,
-  "totalOccurrences": 6347,
+  "totalOccurrences": 6346,
   "counts": {
     "variable": 601,
     "context": 5,
@@ -12876,12 +12876,12 @@
           "entity": "cat",
           "count": 6,
           "lines": [
-            27,
-            33,
-            48,
-            277,
-            282,
-            297
+            18,
+            24,
+            39,
+            396,
+            400,
+            415
           ]
         }
       ]
@@ -12890,7 +12890,7 @@
       "name": "variable.liedownamounttail",
       "kind": "variable",
       "member": "liedownamounttail",
-      "totalCount": 4,
+      "totalCount": 3,
       "shorthandCount": 0,
       "fileCount": 1,
       "entities": [
@@ -12900,12 +12900,11 @@
         {
           "path": "resource_pack/animations/cat.animation.json",
           "entity": "cat",
-          "count": 4,
+          "count": 3,
           "lines": [
-            55,
-            63,
-            304,
-            312
+            46,
+            54,
+            422
           ]
         }
       ]
@@ -12926,8 +12925,8 @@
           "entity": "cat",
           "count": 2,
           "lines": [
-            27,
-            282
+            18,
+            400
           ]
         }
       ]
@@ -23672,26 +23671,26 @@
           "entity": "cat",
           "count": 20,
           "lines": [
-            38,
-            41,
-            44,
-            47,
-            62,
-            65,
-            68,
-            71,
-            79,
-            82,
-            85,
-            88,
-            96,
-            99,
-            102,
-            105,
-            113,
-            116,
-            119,
-            122
+            26,
+            29,
+            32,
+            35,
+            50,
+            53,
+            56,
+            59,
+            74,
+            77,
+            80,
+            83,
+            98,
+            101,
+            104,
+            107,
+            122,
+            125,
+            128,
+            131
           ]
         },
         {
